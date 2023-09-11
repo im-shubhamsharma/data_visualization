@@ -7,8 +7,10 @@ import GammaStatistics from "./components/GammaStatistics";
 function App() {
   return (
     <div className="app">
-      <FlavanoidsStatistics data={data as unknown as WineEntry[]} />
-      <GammaStatistics data={data as unknown as WineEntry[]} />
+      <div className="container">
+        <FlavanoidsStatistics data={data as unknown as WineEntry[]} />
+        <GammaStatistics data={data as unknown as WineEntry[]} />
+      </div>
     </div>
   );
 }

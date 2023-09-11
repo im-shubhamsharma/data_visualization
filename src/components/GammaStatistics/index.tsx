@@ -10,7 +10,8 @@ const GammaStatistics = (props: GammaStatisticsProps) => {
   const { data } = props;
 
   const dataWithGamma: WineDataWithGamma[] = data.map((entry) => {
-    const Gamma = (entry.Ash * entry.Hue) / entry.Magnesium;
+    let Gamma = (entry.Ash * entry.Hue) / entry.Magnesium;
+    Gamma = parseFloat(Gamma.toFixed(3));
     return { ...entry, Gamma };
   });
 
@@ -24,21 +25,25 @@ const GammaStatistics = (props: GammaStatisticsProps) => {
     classes[alcoholClass].push(entry.Gamma);
   });
 
-  const stats = getStats(classes);
+  const stats = getStats(classes, 3);
 
   return (
     <div>
       <h2>Class-wise Gamma Statistics</h2>
+
       <table>
-        <table>
-          <thead>{renderHeader(stats)}</thead>
-          <tbody>
-            {renderMeasureRow(stats, "Gamma", "Mean")}
-            {renderMeasureRow(stats, "Gamma", "Median")}
-            {renderMeasureRow(stats, "Gamma", "Mode")}
-          </tbody>
-        </table>
+        <thead>{renderHeader(stats)}</thead>
+        <tbody>
+          {renderMeasureRow(stats, "Gamma", "Mean")}
+          {renderMeasureRow(stats, "Gamma", "Median")}
+          {renderMeasureRow(stats, "Gamma", "Mode")}
+        </tbody>
       </table>
+      <p>
+        *All Gamma values are rounded off to 3 digits before calculating mode.
+        If we do not round off these values there will be no mode available for
+        any class.
+      </p>
     </div>
   );
 };

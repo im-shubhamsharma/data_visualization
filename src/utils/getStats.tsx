@@ -1,7 +1,10 @@
 import { Stat } from "../types/wine-data.types";
 import { calculateMode } from "./calculateMode";
 
-export const getStats = (classes: Record<string, number[]>) => {
+export const getStats = (
+  classes: Record<string, number[]>,
+  toFixed: number = 2
+) => {
   const stats: Stat[] = [];
 
   for (const alcoholClass in classes) {
@@ -20,8 +23,8 @@ export const getStats = (classes: Record<string, number[]>) => {
 
     stats.push({
       Class: alcoholClass,
-      Mean: mean.toFixed(3),
-      Median: median.toFixed(3),
+      Mean: mean.toFixed(toFixed),
+      Median: median.toFixed(toFixed),
       Mode: mode.length
         ? mode.length === 1
           ? `${mode[0]}`
