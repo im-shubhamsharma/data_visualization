@@ -2,8 +2,7 @@ import { Stat } from "../types/wine-data.types";
 import { calculateMode } from "./calculateMode";
 
 export const getStats = (
-  classes: Record<string, number[]>,
-  toFixed: number = 2
+  classes: Record<string, number[]>
 ) => {
   const stats: Stat[] = [];
 
@@ -23,8 +22,8 @@ export const getStats = (
 
     stats.push({
       Class: alcoholClass,
-      Mean: mean.toFixed(toFixed),
-      Median: median.toFixed(toFixed),
+      Mean: mean.toFixed(3),
+      Median: median.toFixed(3),
       Mode: mode.length
         ? mode.length === 1
           ? `${mode[0]}`

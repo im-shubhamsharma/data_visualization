@@ -10,8 +10,8 @@ const GammaStatistics = (props: GammaStatisticsProps) => {
   const { data } = props;
 
   const dataWithGamma: WineDataWithGamma[] = data.map((entry) => {
-    let Gamma = (entry.Ash * entry.Hue) / entry.Magnesium;
-    Gamma = parseFloat(Gamma.toFixed(3));
+    const Gamma = (entry.Ash * entry.Hue) / entry.Magnesium;
+    // Gamma = parseFloat(Gamma.toFixed(3));
     return { ...entry, Gamma };
   });
 
@@ -25,7 +25,7 @@ const GammaStatistics = (props: GammaStatisticsProps) => {
     classes[alcoholClass].push(entry.Gamma);
   });
 
-  const stats = getStats(classes, 3);
+  const stats = getStats(classes);
 
   return (
     <div>
