@@ -39,11 +39,6 @@ const GammaStatistics = (props: GammaStatisticsProps) => {
           {renderMeasureRow(stats, "Gamma", "Mode")}
         </tbody>
       </table>
-      <p>
-        *All Gamma values are rounded off to 3 digits before calculating mode.
-        If we do not round off these values there will be no mode available for
-        any class.
-      </p>
     </div>
   );
 };
