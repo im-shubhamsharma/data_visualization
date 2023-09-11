@@ -1,6 +1,7 @@
 import data from "./utils/Wine-Data.json";
 import "./App.css";
-import WineStatsTable, { WineEntry } from "./components/WineStateTable";
+import WineStatsTable from "./components/FlavanoidsStatistics";
+import { WineEntry } from "./types/wine-data.types";
 
 function App() {
   return (

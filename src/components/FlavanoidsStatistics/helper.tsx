@@ -1,33 +1,6 @@
-import React from "react";
+import { WineEntry } from "../../types/wine-data.types";
 
-export type WineEntry = {
-  Alcohol: number;
-  "Malic Acid": number;
-  Ash: number;
-  "Alcalinity of ash": number;
-  Magnesium: number;
-  "Total phenols": number;
-  Flavanoids: number;
-  "Nonflavanoid phenols": number;
-  Proanthocyanins: number;
-  "Color intensity": number;
-  Hue: number;
-  "OD280/OD315 of diluted wines": number;
-  Unknown: number;
-};
-
-type WineStatsProps = {
-  data: WineEntry[];
-};
-
-type Stat = {
-  Class: number;
-  Mean: number;
-  Median: number;
-  Mode: number;
-};
-
-function calculateMode(arr: number[]): number[] {
+export const calculateMode = (arr: number[]): number[] => {
   const frequencyMap: { [key: number]: number } = {};
   let maxFrequency = 0;
   const modes: number[] = [];
@@ -55,9 +28,9 @@ function calculateMode(arr: number[]): number[] {
   }
 
   return modes;
-}
+};
 
-function calculateStatistics(data: WineEntry[]) {
+export const calculateStatistics = (data: WineEntry[]) => {
   const classes: Record<string, number[]> = {};
 
   data.forEach((entry) => {
@@ -106,42 +79,4 @@ function calculateStatistics(data: WineEntry[]) {
   }
 
   return stats;
-}
-
-const WineStatsTable: React.FC<WineStatsProps> = ({ data }) => {
-  const stats = calculateStatistics(data);
-
-  const renderHeader = () => (
-    <tr>
-      <th>Measure</th>
-      {stats.map((stat) => (
-        <th key={`header-${stat.Class}`}>Class {stat.Class}</th>
-      ))}
-    </tr>
-  );
-
-  const renderMeasureRow = (measureName: string, statisticKey: keyof Stat) => (
-    <tr key={`row-${measureName}-${statisticKey}`}>
-      <td>{`${measureName} ${statisticKey}`}</td>
-      {stats.map((stat) => (
-        <td key={`cell-${stat.Class}-${statisticKey}`}>{stat[statisticKey]}</td>
-      ))}
-    </tr>
-  );
-
-  return (
-    <div>
-      <h2>Class-wise Flavanoids Statistics</h2>
-      <table>
-        <thead>{renderHeader()}</thead>
-        <tbody>
-          {renderMeasureRow("Flavanoids", "Mean")}
-          {renderMeasureRow("Flavanoids", "Median")}
-          {renderMeasureRow("Flavanoids", "Mode")}
-        </tbody>
-      </table>
-    </div>
-  );
 };
-
-export default WineStatsTable;
