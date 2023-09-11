@@ -1,6 +1,7 @@
 import React from "react";
-import { Stat, WineEntry } from "../../types/wine-data.types";
-import { calculateStatistics } from "./helper";
+import { WineEntry } from "../../types/wine-data.types";
+import { renderHeader, renderMeasureRow } from "../TableHelper";
+import { getStats } from "../../utils/getStats";
 
 type FlavanoidsStatisticsProps = {
   data: WineEntry[];
@@ -9,35 +10,31 @@ type FlavanoidsStatisticsProps = {
 const FlavanoidsStatistics: React.FC<FlavanoidsStatisticsProps> = ({
   data,
 }) => {
-  const stats = calculateStatistics(data);
+  const classes: Record<string, number[]> = {};
 
-  const renderHeader = () => (
-    <tr>
-      <th>Measure</th>
-      {stats.map((stat) => (
-        <th key={`header-${stat.Class}`}>Class {stat.Class}</th>
-      ))}
-    </tr>
-  );
+  data.forEach((entry) => {
+    const alcoholClass = entry.Alcohol.toString();
+    if (!classes[alcoholClass]) {
+      classes[alcoholClass] = [];
+    }
+    if (typeof entry.Flavanoids === "string") {
+      classes[alcoholClass].push(parseFloat(entry.Flavanoids));
+    } else if (typeof entry.Flavanoids === "number") {
+      classes[alcoholClass].push(entry.Flavanoids);
+    }
+  });
 
-  const renderMeasureRow = (measureName: string, statisticKey: keyof Stat) => (
-    <tr key={`row-${measureName}-${statisticKey}`}>
-      <td>{`${measureName} ${statisticKey}`}</td>
-      {stats.map((stat) => (
-        <td key={`cell-${stat.Class}-${statisticKey}`}>{stat[statisticKey]}</td>
-      ))}
-    </tr>
-  );
+  const stats = getStats(classes);
 
   return (
     <div>
       <h2>Class-wise Flavanoids Statistics</h2>
       <table>
-        <thead>{renderHeader()}</thead>
+        <thead>{renderHeader(stats)}</thead>
         <tbody>
-          {renderMeasureRow("Flavanoids", "Mean")}
-          {renderMeasureRow("Flavanoids", "Median")}
-          {renderMeasureRow("Flavanoids", "Mode")}
+          {renderMeasureRow(stats, "Flavanoids", "Mean")}
+          {renderMeasureRow(stats, "Flavanoids", "Median")}
+          {renderMeasureRow(stats, "Flavanoids", "Mode")}
         </tbody>
       </table>
     </div>

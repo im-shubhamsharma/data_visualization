@@ -1,12 +1,14 @@
 import data from "./utils/Wine-Data.json";
 import "./App.css";
-import WineStatsTable from "./components/FlavanoidsStatistics";
+import FlavanoidsStatistics from "./components/FlavanoidsStatistics";
 import { WineEntry } from "./types/wine-data.types";
+import GammaStatistics from "./components/GammaStatistics";
 
 function App() {
   return (
     <div className="app">
-      <WineStatsTable data={data as unknown as WineEntry[]} />
+      <FlavanoidsStatistics data={data as unknown as WineEntry[]} />
+      <GammaStatistics data={data as unknown as WineEntry[]} />
     </div>
   );
 }

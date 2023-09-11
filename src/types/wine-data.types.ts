@@ -14,9 +14,13 @@ export type WineEntry = {
   Unknown: number;
 };
 
+export type WineDataWithGamma = WineEntry & {
+  Gamma: number;
+};
+
 export type Stat = {
-  Class: number;
-  Mean: number;
-  Median: number;
-  Mode: number;
+  Class: string;
+  Mean: string;
+  Median: string;
+  Mode: string;
 };
